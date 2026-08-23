@@ -135,3 +135,11 @@ jobs:
         run: |
           kubectl describe pods -l app=backend
           kubectl get events --sort-by=.lastTimestamp
+
+      - name: Diagnose EKS nodes
+        run: |
+          kubectl get nodes -o wide
+          aws eks describe-nodegroup \
+            --cluster-name $EKS_CLUSTER \
+            --nodegroup-name udacity \
+            --region $AWS_REGION
